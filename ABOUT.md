@@ -273,6 +273,69 @@ Markdown is the ideal format for this. [Agents](https://docs.anthropic.com/en/do
     ```
 
 
+## System Design Baseline (pre-backlog)
+
+Establish and review a comprehensive system design before populating the backlog. This reduces rework and aligns stories with stable boundaries.
+
+- System context and architecture views are documented in `docs/architecture.md` (logical, deployment, data, integration)
+- Domain model, key workflows, and invariants are captured (sequence/state diagrams encouraged)
+- External integrations and SLAs, schemas, and versioning strategy are defined
+- Non-functional requirements (security, privacy, performance, availability, observability) are explicit
+- Capacity assumptions and rough sizing are noted (orders of magnitude are sufficient)
+- Known risks and decision tradeoffs recorded; ADR index initialized (see Architecture Change Control)
+- Human review/approval recorded before moving to backlog creation
+
+Quick baseline checklist:
+
+- Architecture views present and linked from `CLAUDE.md`
+- Interfaces and data contracts sketched with versioning plan
+- NFRs enumerated and testable where feasible
+- ADR directory created with initial records (if applicable)
+
+## Feature Technical Design Docs (per Story)
+
+Every Story should have a short technical design document that is reviewed and approved before coding starts. Keep it concise (1–2 pages) and link artifacts.
+
+Required contents (minimum):
+
+- Problem statement and scope boundaries; link the parent Epic/Story in Linear
+- Proposed approach and alternatives considered; rationale
+- Affected components/interfaces, data models, migrations, and risks
+- Test strategy mapping AC → tests; rollout/rollback considerations
+- Impact on architecture? If yes, reference/introduce an ADR (see below)
+
+When to design:
+
+- Up-front (during Story creation):
+  - Pros: Better dependency planning, smoother parallelization, earlier risk surfacing
+  - Cons: Risk of churn if requirements evolve; higher upfront time cost
+- Just-in-time (first step before development):
+  - Pros: Fresher context, less waste if scope changes, aligns closely with implementation
+  - Cons: Can compress schedules; risks late discovery of cross-team impacts
+
+Recommended approach for this workflow: a hybrid.
+
+- Create a lightweight design stub at Story creation (problem, options, initial interfaces)
+- Flesh it out just-in-time before QA writes tests so AC and tests reflect the final design
+- Require human approval of the design doc before moving to Red (tests)
+
+## Architecture Change Control (ADRs)
+
+Any change that affects cross-cutting concerns or system boundaries must be captured via an Architecture Decision Record and explicitly called out for human review.
+
+- Maintain `docs/adr/` with timestamped ADRs; link from `docs/architecture.md`
+- Reference ADR IDs in the Story design doc and in PR descriptions
+- Coordinator gates merges on ADR approval when architecture is impacted
+- Update `docs/architecture.md` diagrams/views if the ADR alters them
+
+## End-of-cycle hygiene
+
+At the end of each development cycle:
+
+- Log technical debt as Linear issues (label: Tech Debt) with links to the PRs
+- Run a documentation audit: update `docs/architecture.md`, design docs, and `CLAUDE.md` references as needed
+- Note any deferred ADR follow-ups and create issues if not addressed
+
 ## Roles
 
 - Coordinator (parent process): Orchestrates phases, gathers context, routes tasks, and gates transitions; **does NOT code**
@@ -298,6 +361,12 @@ sequenceDiagram
     Engineer->>Coordinator: Start TDDV session (Epic/Story/Subtask)
     Coordinator->>Linear: Fetch context (Epic, Story, Subtask, AC)
     Coordinator->>Git: Read docs/ARCHITECTURE.md, docs/PRD.md, CLAUDE.md
+    Coordinator->>Arch: Technical design for Story (gate)
+    Arch->>Linear: Link technical design doc to Story
+    alt Architecture impacted
+        Arch->>Git: Draft ADR under docs/adr/
+        Arch->>Engineer: Request ADR approval
+    end
     Coordinator->>QA: Generate/commit failing tests (red)
     QA->>Git: Commit tests branch/PR
     Coordinator->>Dev: Implement minimal to pass tests
@@ -314,6 +383,9 @@ sequenceDiagram
     else Pass
         Coordinator->>Git: Merge PR
         Coordinator->>Linear: Update item status, post summary
+        Coordinator->>Linear: Create Tech Debt issues (if any)
+        Coordinator->>Git: Update docs (architecture/design)
+        Coordinator->>Linear: Record documentation audit outcome
     end
 ```
 
@@ -324,32 +396,39 @@ sequenceDiagram
     - Coordinator queries Linear MCP for Epic → Story → Subtask and acceptance criteria
     - Coordinator synthesizes concise brief and confirms scope (using plan mode)
 
-2) Red: QA writes tests
+2) Technical Design (gate): Architect provides technical direction
+    - Draft/complete the Story’s technical design document; link Epic/Story and artifacts
+    - If architecture is impacted, create/reference an ADR and request human approval
+    - Proceed to Red only after design doc approval
+
+3) Red: QA writes tests
     - Generate tests that encode acceptance criteria and key edge cases
     - Place tests according to repo conventions; commit a failing state
     - If ambiguity arises, add clarifying questions to Linear and/or propose revised AC
 
-3) Green: Developer implements
+4) Green: Developer implements
     - Implement the simplest solution to pass tests; commit frequently
     - Add missing tests discovered during implementation
     - Keep the PR small and focused on one Story/Subtask
 
-4) Refactor: Architect improves design
+5) Refactor: Architect improves design
     - Improve structure, naming, boundaries, performance, and reliability
     - Maintain green tests; propose any necessary architectural notes in `docs/ARCHITECTURE.md`
 
-5) Code Review: Code Reviewer
+6) Code Review: Code Reviewer
     - Run static checks; comment on correctness, security, perf, DX
     - Enforce standards and ensure AC is clearly satisfied by artifacts
 
-6) Validate (the “V” in TDDV)
+7) Validate (the “V” in TDDV)
     - Code reviewer: runs CI tests locally, coverage, lint, type checks, security scanning
     - Code reviewer: Definition of Done from `CLAUDE.md` gates merge
     - Coordinator: updates Linear status and posts a succinct summary
 
-7) Merge and Follow-ups
+8) Merge and Follow-ups
     - Coordinator: opens a PR with summary of what was accomplished
     - Coordinator: updates docs where necessary and link PR in Linear
+    - Coordinator: creates/updates Linear issues for any technical debt observed
+    - Coordinator: triggers a documentation audit and records outcomes
     - User: Merge once all gates pass; create follow-up tasks for any deferred improvements
 
 ## Prompt Templates
@@ -392,6 +471,9 @@ Rules:
 - Do not pre-refactor; defer design improvements to Architect phase.
 Outputs:
 - Commit diffs; summary of decisions and any trade-offs.
+Prerequisites to start:
+- Story technical design approved and linked in Linear
+- ADR created/approved if architecture is impacted
 ```
 
 ### Architect agent
@@ -420,6 +502,12 @@ Outputs:
 - The Coordinator fetches the current item context and attaches a summary to the PR description
 - The Coordinator posts concise status updates back to Linear at each phase transition (Red → Green → Refactor → Review → Validate → Done)
 
+Additional conventions:
+
+- Maintain `docs/adr/` and reference ADR IDs from Story design docs and PRs
+- Store feature technical design docs under `docs/design/` named by story key/slug
+- Label technical debt issues in Linear (e.g., Tech Debt) and link to PRs
+
 ## Working Agreement and Anti-Patterns
 
 - Keep PRs small and traceable to a single Story/Subtask
@@ -430,14 +518,22 @@ Outputs:
   - Skipping refactor or review when “it’s just a small change”
   - Treating AC as optional suggestions
 
+Definition of Done additions:
+
+- Story has an approved technical design doc linked in Linear and PR
+- If architecture impacted, ADR is approved and referenced
+- Tech debt created in Linear for any deferred cleanup or scope reductions
+- Docs updated (architecture, design docs, `CLAUDE.md` references) or explicit issue filed
+
 ## Quick Checklist
 
 - Coordinator assembled context (docs + Linear) and confirmed scope
+- Story technical design approved and linked; ADR created/approved if needed
 - QA committed failing tests that map to AC
 - Developer made tests green with minimal change
 - Architect refactored while staying green
 - Code Reviewer approved; CI green; DoD satisfied
-- Coordinator updated Linear and merged
+- Coordinator updated Linear and merged; tech debt filed; docs audited
 
 ## Appendix: Example `.claude/agents` layout
 
