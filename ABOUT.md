@@ -6,6 +6,32 @@ Maximize the length of your Claude Code sessions without trading off quality.
 
 -----------------------------------------------------------
 
+## Table of Contents
+
+- [Why?](#why)
+- [Managing Context](#managing-context)
+- [Requirements](#requirements)
+- [System Design Baseline (pre-backlog)](#system-design-baseline-pre-backlog)
+- [Feature Technical Design Docs (per Story)](#feature-technical-design-docs-per-story)
+- [Architecture Change Control (ADRs)](#architecture-change-control-adrs)
+- [End-of-cycle hygiene](#end-of-cycle-hygiene)
+- [Roles](#roles)
+- [Orchestrated TDDV Overview](#orchestrated-tddv-overview)
+- [Detailed Steps](#detailed-steps)
+- [Prompt Templates](#prompt-templates)
+  - [Coordinator (parent process)](#coordinator-parent-process)
+  - [QA agent](#qa-agent)
+  - [Developer agent](#developer-agent)
+  - [Architect agent](#architect-agent)
+  - [Code Reviewer agent](#code-reviewer-agent)
+- [Linear + CLAUDE.md Conventions](#linear--claudemd-conventions)
+- [Working Agreement and Anti-Patterns](#working-agreement-and-anti-patterns)
+- [Quick Checklist](#quick-checklist)
+- [Appendix: Example .claude/agents layout](#appendix-example-claudeagents-layout)
+- [Alternatives: Tools that can support this workflow](#alternatives-tools-that-can-support-this-workflow)
+  - [Coordinator/Subagent Orchestrators](#coordinatorsubagent-orchestrators)
+  - [References](#references)
+
 ## Why?
 
 Set up your project to run a practical, collaborative, AI‑assisted TDD workflow that:
@@ -82,6 +108,8 @@ With the information structured in this way, Agents can be given a single Story 
 ### Levels of Granularity (coarsest -> finest)
 
 ![Inverted documentation pyramid](context_pyramid.svg)
+
+[Back to Table of Contents](#table-of-contents)
 
 -----------------------------------------------------------
 
@@ -273,6 +301,8 @@ Markdown is the ideal format for this. [Agents](https://docs.anthropic.com/en/do
     ```
 
 
+[Back to Table of Contents](#table-of-contents)
+
 ## System Design Baseline (pre-backlog)
 
 Establish and review a comprehensive system design before populating the backlog. This reduces rework and aligns stories with stable boundaries.
@@ -291,6 +321,8 @@ Quick baseline checklist:
 - Interfaces and data contracts sketched with versioning plan
 - NFRs enumerated and testable where feasible
 - ADR directory created with initial records (if applicable)
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Feature Technical Design Docs (per Story)
 
@@ -319,6 +351,8 @@ Recommended approach for this workflow: a hybrid.
 - Flesh it out just-in-time before QA writes tests so AC and tests reflect the final design
 - Require human approval of the design doc before moving to Red (tests)
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Architecture Change Control (ADRs)
 
 Any change that affects cross-cutting concerns or system boundaries must be captured via an Architecture Decision Record and explicitly called out for human review.
@@ -328,6 +362,8 @@ Any change that affects cross-cutting concerns or system boundaries must be capt
 - Coordinator gates merges on ADR approval when architecture is impacted
 - Update `docs/architecture.md` diagrams/views if the ADR alters them
 
+[Back to Table of Contents](#table-of-contents)
+
 ## End-of-cycle hygiene
 
 At the end of each development cycle:
@@ -336,6 +372,8 @@ At the end of each development cycle:
 - Run a documentation audit: update `docs/architecture.md`, design docs, and `CLAUDE.md` references as needed
 - Note any deferred ADR follow-ups and create issues if not addressed
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Roles
 
 - Coordinator (parent process): Orchestrates phases, gathers context, routes tasks, and gates transitions; **does NOT code**
@@ -343,6 +381,8 @@ At the end of each development cycle:
 - Developer: Implements minimal code to go green; adds missing tests discovered during implementation
 - Architect: Improves design while keeping tests green; enforces non-functional requirements
 - Code Reviewer: Ensures AC is met. Enforces standards, security, accessibility, performance, and maintainability
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Orchestrated TDDV Overview
 
@@ -389,7 +429,7 @@ sequenceDiagram
     end
 ```
 
-## Detailed Steps
+### Detailed Steps
 
 1) Intake and Context Assembly
     - Coordinator loads: `CLAUDE.md` and all linked documents
@@ -430,6 +470,8 @@ sequenceDiagram
     - Coordinator: creates/updates Linear issues for any technical debt observed
     - Coordinator: triggers a documentation audit and records outcomes
     - User: Merge once all gates pass; create follow-up tasks for any deferred improvements
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Prompt Templates
 
@@ -496,6 +538,8 @@ Outputs:
 - Review comments and a pass/block decision with reasons.
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Linear + CLAUDE.md Conventions
 
 - `CLAUDE.md` provides defaults (`team`, `project`) for Linear queries and Definition of Done gates
@@ -507,6 +551,8 @@ Additional conventions:
 - Maintain `docs/adr/` and reference ADR IDs from Story design docs and PRs
 - Store feature technical design docs under `docs/design/` named by story key/slug
 - Label technical debt issues in Linear (e.g., Tech Debt) and link to PRs
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Working Agreement and Anti-Patterns
 
@@ -525,6 +571,8 @@ Definition of Done additions:
 - Tech debt created in Linear for any deferred cleanup or scope reductions
 - Docs updated (architecture, design docs, `CLAUDE.md` references) or explicit issue filed
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Quick Checklist
 
 - Coordinator assembled context (docs + Linear) and confirmed scope
@@ -534,6 +582,8 @@ Definition of Done additions:
 - Architect refactored while staying green
 - Code Reviewer approved; CI green; DoD satisfied
 - Coordinator updated Linear and merged; tech debt filed; docs audited
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Appendix: Example `.claude/agents` layout
 
@@ -550,6 +600,8 @@ docs/
   architecture.md
   prd.md
 ```
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Alternatives: Tools that can support this workflow
 
@@ -640,3 +692,5 @@ Practical guidance: Any tool stack can support this TDDV if you 1) enforce the p
 - JetBrains AI Assistant — https://www.jetbrains.com/ai/
 - Warp AI — https://www.warp.dev/ai
 - Aider — https://aider.chat/
+
+[Back to Table of Contents](#table-of-contents)
