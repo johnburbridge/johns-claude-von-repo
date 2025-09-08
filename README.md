@@ -1,6 +1,6 @@
 ## TDDV: Test‑Driven Development + Validation Starter
 
-A forkable starter to adopt a practical, agent‑assisted TDD workflow. It helps teams ship smaller, safer changes with clear gates and auditable artifacts. See `ABOUT.md` for the full methodology.
+A forkable starter to adopt a practical, agent‑assisted TDD workflow. It helps teams ship smaller, safer changes with clear gates and auditable artifacts. See [ABOUT.md](ABOUT.md) for the full methodology.
 
 ### Audience
 
@@ -32,7 +32,7 @@ In the meantime, see `ABOUT.md` for detailed roles, prompts, and tool options.
 
 ### Documentation
 
-- Start here for details: `ABOUT.md`
+- Start here for details: [ABOUT.md](ABOUT.md)
 - Diagram: `context_pyramid.svg`
 - License: `LICENSE`
 

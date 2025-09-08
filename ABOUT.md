@@ -351,6 +351,8 @@ Recommended approach for this workflow: a hybrid.
 - Flesh it out just-in-time before QA writes tests so AC and tests reflect the final design
 - Require human approval of the design doc before moving to Red (tests)
 
+Template: [docs/design/story-design-template.md](docs/design/story-design-template.md)
+
 [Back to Table of Contents](#table-of-contents)
 
 ## Architecture Change Control (ADRs)
@@ -361,6 +363,8 @@ Any change that affects cross-cutting concerns or system boundaries must be capt
 - Reference ADR IDs in the Story design doc and in PR descriptions
 - Coordinator gates merges on ADR approval when architecture is impacted
 - Update `docs/architecture.md` diagrams/views if the ADR alters them
+
+Template: [docs/adr/0000-template.md](docs/adr/0000-template.md)
 
 [Back to Table of Contents](#table-of-contents)
 
