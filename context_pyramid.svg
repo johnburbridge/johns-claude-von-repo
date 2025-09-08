@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" width="900" height="720" role="img" aria-labelledby="title desc">
+  <title id="title">Inverted Documentation Pyramid</title>
+  <desc id="desc">Seven-layer inverted pyramid from broadest to narrowest documentation levels.</desc>
+
+  <defs>
+    <clipPath id="pyramidClip">
+      <polygon points="40,60 520,60 280,660"/>
+    </clipPath>
+    <style>
+      .label { font: 700 18px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, sans-serif; fill: #0f172a; }
+      .leader { stroke: #64748b; stroke-width: 2.5; stroke-linecap: round; }
+      .sliceText { font: 700 18px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, sans-serif; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+      .categoryBox { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1; }
+      .categoryTitle { font: 700 12px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, sans-serif; fill: #334155; }
+    </style>
+  </defs>
+
+  <!-- Background to ensure contrast in dark mode -->
+  <rect x="0" y="0" width="900" height="720" fill="#ffffff"/>
+
+  <!-- Pyramid outline -->
+  <polygon points="40,60 520,60 280,660" fill="none" stroke="#111827" stroke-width="2"/>
+
+  <!-- Layer fills (clipped to pyramid) -->
+  <g clip-path="url(#pyramidClip)">
+    <!-- 7 equal-height bands from top (broadest) to bottom (narrowest) -->
+    <rect x="0" y="60"  width="900" height="85.714" fill="#1e3a8a"/>
+    <rect x="0" y="145.714" width="900" height="85.714" fill="#1e40af"/>
+    <rect x="0" y="231.428" width="900" height="85.714" fill="#3730a3"/>
+    <rect x="0" y="317.142" width="900" height="85.714" fill="#4338ca"/>
+    <rect x="0" y="402.856" width="900" height="85.714" fill="#4f46e5"/>
+    <rect x="0" y="488.57"  width="900" height="85.714" fill="#6366f1"/>
+    <rect x="0" y="574.284" width="900" height="85.716" fill="#818cf8"/>
+  </g>
+
+  <!-- No inside labels to keep text wholly visible -->
+  <g clip-path="url(#pyramidClip)"></g>
+
+  <!-- Category group boxes and titles -->
+  <g>
+    <rect class="categoryBox" x="585" y="40" width="290" height="340" rx="12" ry="12"/>
+    <text class="categoryTitle" x="600" y="65">Durable documentation</text>
+
+    <rect class="categoryBox" x="585" y="390" width="290" height="260" rx="12" ry="12"/>
+    <text class="categoryTitle" x="600" y="413">Project state</text>
+  </g>
+
+  <!-- Right-side labels with leader lines for clarity -->
+  <!-- Centers of each slice on the right edge of the pyramid -->
+  <g>
+    <!-- y centers: 102.857, 188.571, 274.286, 360, 445.714, 531.429, 617.143 -->
+    <!-- Right-edge x at each y (linear along right side): 678.572, 635.714, 592.858, 550, 507.143, 464.286, 421.428 -->
+    <line class="leader" x1="502.857" y1="102.857" x2="585" y2="102.857"/>
+    <text class="label" x="600" y="102.857">Project overview</text>
+
+    <line class="leader" x1="468.572" y1="188.571" x2="585" y2="188.571"/>
+    <text class="label" x="600" y="188.571">Architecture</text>
+
+    <line class="leader" x1="434.286" y1="274.286" x2="585" y2="274.286"/>
+    <text class="label" x="600" y="274.286">Development practices</text>
+
+    <line class="leader" x1="400" y1="360" x2="585" y2="360"/>
+    <text class="label" x="600" y="360">Directory structure</text>
+    <line class="leader" x1="365.714" y1="445.714" x2="585" y2="445.714"/>
+    <text class="label" x="600" y="445.714">Epic level goals</text>
+
+    <line class="leader" x1="331.429" y1="531.429" x2="585" y2="531.429"/>
+    <text class="label" x="600" y="531.429">Story level goals</text>
+
+    <line class="leader" x1="297.143" y1="617.143" x2="585" y2="617.143"/>
+    <text class="label" x="600" y="617.143">Subtask level details</text>
+  </g>
+</svg>
+
+
