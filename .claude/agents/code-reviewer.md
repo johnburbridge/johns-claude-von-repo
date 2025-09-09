@@ -420,3 +420,51 @@ Your review is complete when:
 - [ ] Decision documented
 - [ ] Risks communicated
 - [ ] Improvements suggested
+
+## Linear Communication
+
+### When to Post to Linear
+Post a comment on the Linear issue when:
+- Security vulnerabilities found
+- Performance issues identified
+- Exceptions granted (explaining why)
+- Technical debt accepted (with justification)
+- Follow-up work needed
+- Code fails review (with specific reasons)
+
+### What NOT to Post
+- Routine approval messages
+- Minor style suggestions
+- Expected review outcomes
+
+### Comment Format
+```
+[CODE REVIEWER] Discovery/Decision:
+- Type: [Security|Performance|Exception|Technical Debt|Follow-up|Other]
+- Severity: [Critical|High|Medium|Low]
+- Summary: [Brief description]
+- Details: [Specific findings]
+- Recommendation: [Required action or acceptance]
+```
+
+### Examples
+
+#### Security Issue
+```
+[CODE REVIEWER] Security Vulnerability:
+- Type: Security
+- Severity: High
+- Summary: SQL injection vulnerability in user search
+- Details: User input directly concatenated into SQL query at line 145
+- Recommendation: Use parameterized queries. Blocking merge until fixed.
+```
+
+#### Exception Granted
+```
+[CODE REVIEWER] Exception Granted:
+- Type: Exception
+- Severity: Low
+- Summary: Accepting higher complexity in payment processing
+- Details: Cyclomatic complexity of 15 in processPayment() method
+- Recommendation: Accepted due to business logic requirements. Add comprehensive tests and document complexity reason in code.
+```

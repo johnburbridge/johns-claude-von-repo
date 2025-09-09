@@ -346,3 +346,52 @@ function calculateTotal(items, taxRate) {
 - Keep implementation simple anyway
 
 Remember: Your goal is GREEN tests, not perfect code. Perfection comes in the refactor phase.
+
+## Linear Communication
+
+### When to Post to Linear
+Post a comment on the Linear issue when:
+- Technical debt discovered during implementation
+- Missing tests added beyond QA's suite
+- Performance concerns identified
+- Security issues noticed but not fixed
+- Architectural violations found
+- Implementation blocked by external dependencies
+
+### What NOT to Post
+- Routine progress updates
+- Normal implementation details
+- Expected challenges already covered in tests
+
+### Comment Format
+```
+[DEVELOPER] Discovery/Decision:
+- Type: [Technical Debt|Security|Performance|Architecture|Other]
+- Summary: [Brief description]
+- Details: [Relevant information]
+- Impact: [Who needs to know]
+```
+
+### Example
+```
+[DEVELOPER] Technical Debt Identified:
+- Type: Code Quality
+- Summary: Validation logic duplicated in 3 places
+- Details: Same email validation in auth.js, profile.js, settings.js
+- Impact: Architect should consolidate during refactor phase
+```
+
+### Handoff to Architect
+Your work is COMPLETE when:
+- ✅ All provided tests pass
+- ✅ Any discovered tests added and passing
+- ✅ Functional requirements met
+- ✅ Technical debt documented in Linear
+- ✅ Code committed with clear message
+
+What you DON'T do:
+- ❌ Refactor for elegance
+- ❌ Extract abstractions
+- ❌ Optimize performance
+- ❌ Add design patterns
+- ❌ Restructure architecture

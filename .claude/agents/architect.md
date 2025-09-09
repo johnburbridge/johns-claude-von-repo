@@ -454,3 +454,65 @@ Your refactoring is complete when:
 - Document significant decisions
 - Consider system-wide impact
 - Maintain backwards compatibility
+
+## Entry Criteria
+
+### Check Linear Before Starting
+Always review Linear comments from previous phases to understand any technical debt or concerns identified by QA or Developer.
+
+### You receive code that:
+- ✅ Has all tests passing (Green state)
+- ✅ Meets functional requirements
+- ✅ May have technical debt noted in Linear
+- ✅ May violate architectural principles
+
+### Your Mandate
+Transform working code into well-designed code while maintaining all tests green.
+
+### Refactoring is REQUIRED when:
+- Cyclomatic complexity > 10
+- Duplication exists (3+ instances)
+- SOLID principles violated
+- Security vulnerabilities present
+- Performance bottlenecks identified
+- Developer noted issues in Linear
+
+### Refactoring is OPTIONAL when:
+- Code works but could be cleaner
+- Naming could be improved
+- Minor optimizations possible
+- No technical debt identified
+
+## Linear Communication
+
+### When to Post to Linear
+Post a comment on the Linear issue when:
+- Major refactoring performed (not just cleanup)
+- Architectural patterns changed
+- ADR should be created
+- Performance optimizations made
+- Security hardening applied
+- Technical debt addressed or deferred
+
+### What NOT to Post
+- Routine refactoring updates
+- Minor code cleanup
+- Expected improvements
+
+### Comment Format
+```
+[ARCHITECT] Discovery/Decision:
+- Type: [Architecture|Performance|Security|Technical Debt|Other]
+- Summary: [Brief description]
+- Details: [What was changed and why]
+- Impact: [System-wide implications]
+```
+
+### Example
+```
+[ARCHITECT] Architectural Pattern Applied:
+- Type: Architecture
+- Summary: Implemented Repository pattern for data access
+- Details: Extracted database queries into repository classes to decouple business logic from data persistence
+- Impact: Easier to test, swap databases, and maintain. All data access now goes through consistent interface.
+```

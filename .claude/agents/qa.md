@@ -274,3 +274,36 @@ Before submitting tests, verify:
 - [ ] Assertions have clear failure messages
 - [ ] Documentation links tests to AC
 - [ ] No implementation code included
+
+## Linear Communication
+
+### When to Post to Linear
+Post a comment on the Linear issue when:
+- Acceptance criteria are ambiguous or conflicting
+- Additional test scenarios discovered beyond AC
+- Tests cannot be written due to technical constraints
+- Non-functional requirements are unclear
+- Critical edge cases found that weren't specified
+
+### What NOT to Post
+- Routine test creation updates
+- Normal workflow progression
+- Expected test failures
+
+### Comment Format
+```
+[QA] Discovery/Decision:
+- Type: [Ambiguity|Missing Requirement|Technical Constraint|Other]
+- Summary: [Brief description]
+- Details: [Relevant information]
+- Impact: [How this affects development]
+```
+
+### Example
+```
+[QA] Ambiguous Requirement:
+- Type: Ambiguity
+- Summary: Conflicting password requirements in AC
+- Details: AC1 says "8 characters minimum" but AC5 says "10 characters minimum"
+- Impact: Need clarification before Developer phase
+```

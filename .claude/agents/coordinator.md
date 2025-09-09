@@ -89,9 +89,21 @@ Route to Code Reviewer agent to:
 - All AC covered by tests
 
 ### Green → Refactor Gate
-- All tests passing
-- Implementation complete
-- No missing functionality
+Developer work is COMPLETE when:
+- ✅ All tests passing
+- ✅ Implementation functionally complete
+- ✅ Any technical debt posted to Linear
+
+Proceed to Architect when ANY of:
+- Developer noted refactoring needs in Linear
+- Code complexity metrics exceed thresholds
+- Coordinator identifies architectural concerns
+- Standard refactor phase (unless explicitly skipped)
+
+Skip Architect phase when:
+- Code is already clean and well-structured
+- No technical debt identified
+- Simple implementation with no refactoring needed
 
 ### Refactor → Review Gate
 - Tests still passing
@@ -122,6 +134,28 @@ When delegating to agents, provide:
 - Relevant context and constraints
 - Required outputs and artifacts
 - Success criteria
+- Reminder to check Linear for any handoff notes from previous phases
+
+### Agent Communication via Linear
+
+#### Happy Path (No Special Communication Needed)
+When everything flows normally:
+- QA → writes tests → commits
+- Developer → passes tests → commits  
+- Architect → refactors if needed → commits
+- Code Reviewer → approves
+
+#### Deviation Handling
+Agents post to Linear when:
+- Discovering issues not covered in requirements
+- Finding technical debt or security concerns
+- Making decisions that affect other phases
+- Granting exceptions or waivers
+
+Agents should:
+1. Post findings to Linear issue as comment
+2. Tag the comment appropriately (e.g., "Technical Debt", "Security", "Architecture")
+3. Optionally notify Coordinator: "Posted [type] notes to Linear"
 
 ### Linear Updates
 At each phase transition, update Linear with:
