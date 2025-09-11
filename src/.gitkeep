@@ -1,0 +1,35 @@
+# Source Code Directory
+
+This directory will contain your project's source code.
+
+The structure will be customized based on your chosen language and framework during initialization.
+
+## Common Patterns
+
+### For Web Applications
+```
+src/
+├── api/          # API endpoints
+├── services/     # Business logic
+├── models/       # Data models
+├── utils/        # Utilities
+└── config/       # Configuration
+```
+
+### For Libraries
+```
+src/
+├── core/         # Core functionality
+├── adapters/     # External integrations
+├── types/        # Type definitions
+└── index         # Main entry point
+```
+
+### For CLI Tools
+```
+src/
+├── commands/     # CLI commands
+├── lib/          # Core logic
+├── utils/        # Helpers
+└── cli           # Entry point
+```

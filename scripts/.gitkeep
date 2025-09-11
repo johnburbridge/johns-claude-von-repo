@@ -1,0 +1,29 @@
+# Scripts Directory
+
+This directory contains build, deployment, and utility scripts.
+
+## Common Scripts
+
+- `setup.sh` - Initial project setup
+- `build.sh` - Build the project
+- `test.sh` - Run tests
+- `deploy.sh` - Deployment script
+- `clean.sh` - Clean build artifacts
+
+## Language-Specific Scripts
+
+### Node.js Projects
+- Use `package.json` scripts primarily
+- Shell scripts for complex operations
+
+### Python Projects
+- `setup.py` or `pyproject.toml` for packaging
+- Makefile for task automation
+
+### Go Projects
+- Makefile for build tasks
+- Go scripts for code generation
+
+### Java Projects
+- Maven/Gradle for build management
+- Shell scripts for deployment
