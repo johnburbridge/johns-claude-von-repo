@@ -396,10 +396,10 @@ Parameters:
   query: "blocks:{{issue.id}}"
 ```
 
-## Integration with TDDV Workflow
+## Integration with TDD Workflow
 
 ### For Coordinator Agent
-Use fetch-context at the start of each TDDV cycle:
+Use fetch-context at the start of each TDD cycle:
 1. Fetch full Epic → Story → Subtask context
 2. Identify acceptance criteria from Story
 3. Check for blocking dependencies
@@ -457,4 +457,4 @@ Possible causes:
 
 ## Summary
 
-The fetch-context command leverages Linear MCP to provide comprehensive, hierarchical context for any issue in your Linear workspace. It automatically traverses the Epic → Story → Subtask structure, assembles relevant information, and presents it in a format optimized for the TDDV workflow agents.
+The fetch-context command leverages Linear MCP to provide comprehensive, hierarchical context for any issue in your Linear workspace. It automatically traverses the Epic → Story → Subtask structure, assembles relevant information, and presents it in a format optimized for the TDD workflow agents.

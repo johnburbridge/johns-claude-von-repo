@@ -84,9 +84,9 @@ The project includes configuration for:
 
 ## Development Workflow
 
-### TDDV (Test-Driven Development + Validation)
+### TDD (Test-Driven Development)
 
-This project follows the TDDV workflow. See [ABOUT.md](ABOUT.md) for details.
+This project follows the TDD workflow. See [ABOUT.md](ABOUT.md) for details.
 
 1. **Red Phase**: Write failing tests first
 2. **Green Phase**: Implement minimal code to pass tests
@@ -517,7 +517,7 @@ git push origin v1.2.3
 - **Documentation**: [Link to docs]
 - **Architecture**: [docs/architecture.md](docs/architecture.md)
 - **Product Requirements**: [docs/prd.md](docs/prd.md)
-- **TDDV Workflow**: [ABOUT.md](ABOUT.md)
+- **TDD Workflow**: [ABOUT.md](ABOUT.md)
 
 ### Communication Channels
 - **Slack**: #[channel-name]

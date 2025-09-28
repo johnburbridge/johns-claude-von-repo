@@ -1,11 +1,11 @@
 # AI-Assisted Test-Driven Development Starter
 
-A comprehensive starter repository for implementing AI-assisted Test-Driven Development with Claude Code. Fork this to bootstrap any project with a proven TDDV (Test-Driven Development + Validation) workflow that leverages specialized AI agents for each development phase.
+A comprehensive starter repository for implementing AI-assisted Test-Driven Development with Claude Code. Fork this to bootstrap any project with a proven TDD workflow that leverages specialized AI agents for each development phase.
 
 ## 🎯 What This Provides
 
 This starter gives you:
-- **5 Specialized AI Agents** for the TDDV workflow (Coordinator, QA, Developer, Architect, Code Reviewer)
+- **5 Specialized AI Agents** for the TDD workflow (Coordinator, QA, Developer, Architect, Code Reviewer)
 - **Adaptive Project Initialization** that discovers your tech stack and generates appropriate configuration
 - **Linear Integration Commands** for managing Epics, Stories, and Subtasks
 - **Documentation Templates** for PRD, Architecture, and Contributing guides
@@ -47,7 +47,7 @@ If using Linear for issue tracking:
 ```
 .
 ├── .claude/                    # Claude Code configuration
-│   ├── agents/                # Specialized TDDV agents
+│   ├── agents/                # Specialized TDD agents
 │   │   ├── coordinator.md    # Orchestrates workflow
 │   │   ├── qa.md            # Writes tests from AC
 │   │   ├── developer.md     # Implements code
@@ -77,14 +77,14 @@ If using Linear for issue tracking:
 ├── tests/                    # Test files (your tests)
 ├── scripts/                  # Build/deploy scripts
 ├── config/                   # Configuration files
-├── ABOUT.md                 # TDDV methodology guide
+├── ABOUT.md                 # TDD methodology guide
 ├── CONTRIBUTING.md          # Development standards
 └── CLAUDE.md               # Generated configuration
 ```
 
-## 🔄 The TDDV Workflow
+## 🔄 The TDD Workflow
 
-This repository implements a Test-Driven Development + Validation workflow:
+This repository implements a Test-Driven Development workflow:
 
 ```mermaid
 graph LR
@@ -111,7 +111,7 @@ graph LR
 ## 🤖 AI Agents
 
 ### Coordinator Agent
-- Orchestrates the entire TDDV workflow
+- Orchestrates the entire TDD workflow
 - Never writes code directly
 - Gates phase transitions
 - Updates Linear status
@@ -177,7 +177,7 @@ Based on detection, CLAUDE.md will include:
 
 ### Core Documents
 
-- **[ABOUT.md](ABOUT.md)**: Complete TDDV methodology and workflow details
+- **[ABOUT.md](ABOUT.md)**: Complete TDD methodology and workflow details
 - **[CONTRIBUTING.md](CONTRIBUTING.md)**: Development standards and guidelines
 - **[docs/prd.md](docs/prd.md)**: Product Requirements template
 - **[docs/architecture.md](docs/architecture.md)**: Architecture template
@@ -192,7 +192,7 @@ After initialization:
 ## 🎓 Learning the Workflow
 
 ### For Developers
-1. Read [ABOUT.md](ABOUT.md) to understand TDDV
+1. Read [ABOUT.md](ABOUT.md) to understand TDD
 2. Review agent definitions in `.claude/agents/`
 3. Practice with `fetch-context` and the QA agent
 4. Follow the Red → Green → Refactor cycle
@@ -261,7 +261,7 @@ MIT License - See [LICENSE](LICENSE) for details
 - [ ] Review generated CLAUDE.md
 - [ ] Configure Linear (if using)
 - [ ] Create your first Epic/Story
-- [ ] Start TDDV workflow with coordinator
+- [ ] Start TDD workflow with coordinator
 
 ## 💡 Tips
 

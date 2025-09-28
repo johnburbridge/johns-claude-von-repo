@@ -1,7 +1,7 @@
 # Initialize Project Command
 
 ## Purpose
-Intelligently initialize a project for TDDV workflow by discovering existing documentation, guiding creation of missing pieces, and generating a tailored CLAUDE.md.
+Intelligently initialize a project for TDD workflow by discovering existing documentation, guiding creation of missing pieces, and generating a tailored CLAUDE.md.
 
 ## Usage
 ```
@@ -372,7 +372,7 @@ Based on discovered and interviewed information, generate CLAUDE.md with:
 - **Product Requirements**: @docs/prd.md
 - **Development Standards**: @CONTRIBUTING.md
 
-## TDDV Workflow Configuration
+## TDD Workflow Configuration
 ### Agents
 - **Coordinator**: @.claude/agents/coordinator.md
 - **QA**: @.claude/agents/qa.md
@@ -496,7 +496,7 @@ graph TD
 ```
 Human: initialize-project
 
-Claude: I'll help initialize your project for TDDV workflow. Let me first check what already exists...
+Claude: I'll help initialize your project for TDD workflow. Let me first check what already exists...
 
 🔍 Discovery Phase:
 - ✅ Found: package.json (Node.js project)
