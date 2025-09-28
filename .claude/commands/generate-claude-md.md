@@ -90,14 +90,14 @@ Core project documentation:
 - **Product Requirements**: @docs/prd.md
 - **Architecture**: @docs/architecture.md
 - **Development Guide**: @CONTRIBUTING.md
-- **TDDV Workflow Guide**: @ABOUT.md
+- **TDD Workflow Guide**: @ABOUT.md
 
 Design documents:
 - **Epic Designs**: @docs/design/epics/
 - **Story Designs**: @docs/design/stories/
 - **Architecture Decisions**: @docs/adr/
 
-## TDDV Workflow Configuration
+## TDD Workflow Configuration
 
 ### Specialized Agents
 Configure Claude Code to use these specialized agents:
@@ -299,7 +299,7 @@ git checkout -b feature/{{issue-key}}-{{description}}
 git commit -m "feat: implement feature X"
 ```
 
-### TDDV Cycle
+### TDD Cycle
 1. `fetch-context {{story-id}}` - Get requirements
 2. Write failing tests (Red)
 3. Implement minimal code (Green)
@@ -322,7 +322,7 @@ cp .env.example .env
 
 ## Getting Help
 
-- **TDDV Workflow**: See @ABOUT.md
+- **TDD Workflow**: See @ABOUT.md
 - **Architecture Details**: See @docs/architecture.md
 - **Product Requirements**: See @docs/prd.md
 - **Development Guide**: See @CONTRIBUTING.md
@@ -332,7 +332,7 @@ cp .env.example .env
 When working on this project:
 
 1. **Always start with context**: Use `fetch-context` to understand the task
-2. **Follow TDDV**: Write tests first, then implement
+2. **Follow TDD**: Write tests first, then implement
 3. **Use appropriate agent**: Each phase has a specialized agent
 4. **Check Definition of Done**: Before marking complete
 5. **Update documentation**: As you make changes
@@ -465,7 +465,7 @@ The file includes:
 - Actual test/build/lint commands
 - Your Definition of Done
 - Linear integration details
-- TDDV workflow configuration
+- TDD workflow configuration
 
 You can regenerate this file anytime by running `generate-claude-md`.
 ```

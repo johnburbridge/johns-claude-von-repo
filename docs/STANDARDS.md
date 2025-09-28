@@ -2,6 +2,10 @@
 
 This framework embodies strong opinions about how software development should be organized. These standards ensure consistency, quality, and maintainability across projects.
 
+## 🌐 Language Agnosticism
+
+**Core Principle**: This framework is intentionally language-agnostic. All standards, patterns, and workflows apply universally across any programming language or technology stack. The framework adapts to your chosen technology while maintaining these consistent organizational principles.
+
 ## 🗂️ Documentation Organization Standards
 
 **Hierarchical Information Architecture**

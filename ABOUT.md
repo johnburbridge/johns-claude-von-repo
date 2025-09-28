@@ -16,7 +16,7 @@ Maximize the length of your Claude Code sessions without trading off quality.
 - [Architecture Change Control (ADRs)](#architecture-change-control-adrs)
 - [End-of-cycle hygiene](#end-of-cycle-hygiene)
 - [Roles](#roles)
-- [Orchestrated TDDV Overview](#orchestrated-tddv-overview)
+- [Orchestrated TDD Overview](#orchestrated-tddv-overview)
 - [Detailed Steps](#detailed-steps)
 - [Prompt Templates](#prompt-templates)
   - [Coordinator (parent process)](#coordinator-parent-process)
@@ -388,7 +388,7 @@ At the end of each development cycle:
 
 [Back to Table of Contents](#table-of-contents)
 
-## Orchestrated TDDV Overview
+## Orchestrated TDD Overview
 
 ```mermaid
 sequenceDiagram
@@ -402,7 +402,7 @@ sequenceDiagram
     participant Linear
     participant CI
 
-    Engineer->>Coordinator: Start TDDV session (Epic/Story/Subtask)
+    Engineer->>Coordinator: Start TDD session (Epic/Story/Subtask)
     Coordinator->>Linear: Fetch context (Epic, Story, Subtask, AC)
     Coordinator->>Git: Read docs/ARCHITECTURE.md, docs/PRD.md, CLAUDE.md
     Coordinator->>Arch: Technical design for Story (gate)
@@ -463,7 +463,7 @@ sequenceDiagram
     - Run static checks; comment on correctness, security, perf, DX
     - Enforce standards and ensure AC is clearly satisfied by artifacts
 
-7) Validate (the “V” in TDDV)
+7) Validate (the “V” in TDD)
     - Code reviewer: runs CI tests locally, coverage, lint, type checks, security scanning
     - Code reviewer: Definition of Done from `CLAUDE.md` gates merge
     - Coordinator: updates Linear status and posts a succinct summary
@@ -609,58 +609,58 @@ docs/
 
 ## Alternatives: Tools that can support this workflow
 
-The TDDV loop can be approximated or implemented with several tools beyond Claude Code. Capabilities vary; below is a concise mapping.
+The TDD loop can be approximated or implemented with several tools beyond Claude Code. Capabilities vary; below is a concise mapping.
 
 Note on architecture: This workflow does not require true parallel multi-agent systems. It relies on a single coordinator/orchestrator that spawns specialized agents (subagents) to run sequentially per phase (QA → Dev → Arch → Review). Most IDE assistants are single-agent; if you want orchestration/spawned subagents, pair the IDE with an external orchestrator (exposed via MCP/tools) and keep phases gated by tests and CI.
 
 - Cursor (AI editor)
   - Strengths: Repo-aware edits, multi-file diffs, integrated terminal, agentic plan/execute flows.
-  - Use for TDDV: Coordinator prompt orchestrates phases; role prompts for QA/Dev/Arch/CR; run tests via terminal; gate on CI.
+  - Use for TDD: Coordinator prompt orchestrates phases; role prompts for QA/Dev/Arch/CR; run tests via terminal; gate on CI.
   - Notes: Single agent. Use an external orchestrator (via MCP/tool) to spawn subagents sequentially; keep changes small and gated.
 
 - Warp AI (terminal)
   - Strengths: Error explanation, command suggestions, reusable workflows; great for running tests and fixing failures quickly.
-  - Use for TDDV: Pair with an editor agent; use Warp to drive red/green cycles and diagnose CI.
+  - Use for TDD: Pair with an editor agent; use Warp to drive red/green cycles and diagnose CI.
   - Notes: Not a code editor; best as the execution/debug companion alongside an external orchestrator.
 
 - Cline (VS Code extension)
   - Strengths: Plan and Act modes, can edit files and run terminal tasks; flexible model choice; good autonomy for scoped tasks.
-  - Use for TDDV: Plan mode for Coordinator brief; Act for QA (tests) then Dev (implementation); keep phases explicit.
+  - Use for TDD: Plan mode for Coordinator brief; Act for QA (tests) then Dev (implementation); keep phases explicit.
   - Notes: Single agent. Treat refactor and review as separate Act steps; subagent spawning requires an external orchestrator.
 
 - Aider (CLI)
   - Strengths: Git-native, small diffs, repeatable; supports `--test-cmd` to run tests during iterations.
-  - Use for TDDV: Automate red/green loop by pointing to tests first; each change auto-committed for auditability.
+  - Use for TDD: Automate red/green loop by pointing to tests first; each change auto-committed for auditability.
   - Notes: Single agent. Excellent for repo hygiene; pair with an orchestrator if you want subagent-style delegation.
 
 - GitHub Copilot + Copilot Chat/Workspace
   - Strengths: Repo-aware edits and PRs, cloud execution for some tasks, strong IDE integration.
-  - Use for TDDV: Have Chat create failing tests, then implement; use checks to gate merge; Workspace can propose plans.
+  - Use for TDD: Have Chat create failing tests, then implement; use checks to gate merge; Workspace can propose plans.
   - Notes: Single agent. Roles simulated via prompts; maintain manual phase gates or call an external orchestrator.
 
 - Sourcegraph Cody
   - Strengths: Deep codebase awareness, accurate edits/diffs, good at test suggestions.
-  - Use for TDDV: Ask Cody to draft failing tests from AC, then minimal implementation, then refactor suggestions.
+  - Use for TDD: Ask Cody to draft failing tests from AC, then minimal implementation, then refactor suggestions.
   - Notes: Single agent. Keep loops tight and commit frequently; orchestration via external tool if needed.
 
 - Continue.dev (VS Code/JetBrains)
   - Strengths: Open-source, local or hosted models, context windows per project.
-  - Use for TDDV: Role prompts per phase; run tests via IDE/terminal; manual gating.
+  - Use for TDD: Role prompts per phase; run tests via IDE/terminal; manual gating.
   - Notes: Single agent. Lightweight; pair with an external orchestrator for subagent behavior.
 
 - Windsurf (Codeium)
   - Strengths: Repo awareness, agentic flows, multi-file editing; teams often use it for test-first.
-  - Use for TDDV: Ask for failing tests first, implement minimal green, then refactor; use integrated commands for validation.
+  - Use for TDD: Ask for failing tests first, implement minimal green, then refactor; use integrated commands for validation.
   - Notes: Single agent; use an external orchestrator if you want to spawn subagents per phase.
 
 - JetBrains AI Assistant
   - Strengths: Tight IDE integration, code understanding, refactor help.
-  - Use for TDDV: Draft tests, implement, and refactor within IDE; run inspections and tests to validate.
+  - Use for TDD: Draft tests, implement, and refactor within IDE; run inspections and tests to validate.
   - Notes: Single agent. External orchestrator can manage sequential role handoffs.
 
 - Amazon Q Developer
   - Strengths: Agentic tasks (implement, test, refactor, review), strong AWS ecosystem integration.
-  - Use for TDDV: Treat each phase as a separate agent task; rely on CI for validation gates.
+  - Use for TDD: Treat each phase as a separate agent task; rely on CI for validation gates.
   - Notes: IDE assistant is single agent. For true orchestration, use Agents for Amazon Bedrock (service-side) and invoke via tools.
 
 - OpenAI Codex (status)
@@ -677,7 +677,7 @@ If you prefer a coordinator that spawns specialized subagents (manager/worker or
 - MetaGPT (SOP-driven agent teams)
 - Agents for Amazon Bedrock (service-side orchestration)
 
-Practical guidance: Any tool stack can support this TDDV if you 1) enforce the phase gates, 2) encode AC in tests first, 3) keep changes small and auditable, and 4) validate via CI and a written Definition of Done.
+Practical guidance: Any tool stack can support this TDD if you 1) enforce the phase gates, 2) encode AC in tests first, 3) keep changes small and auditable, and 4) validate via CI and a written Definition of Done.
 
 ### References
 
