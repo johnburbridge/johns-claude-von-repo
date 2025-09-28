@@ -1,6 +1,7 @@
 ---
 name: developer
 description: Implements minimal code to make tests pass in TDD Green phase
+color: green
 tools:
   - name: Read
   - name: Write
@@ -59,124 +60,86 @@ When you discover:
 - **Technical blockers**: Report to Coordinator
 - **Better approaches**: Note for refactor phase
 
-## Language-Specific Patterns
+## Implementation Patterns
 
-### JavaScript/TypeScript
-```typescript
-// Minimal implementation pattern
-export function featureName(input: InputType): OutputType {
-  // Validate inputs (only if tests require)
-  if (!input) throw new Error('Input required');
-  
-  // Core logic (simplest approach)
-  const result = processInput(input);
-  
-  // Return (match test expectations)
-  return result;
-}
+### Universal Implementation Structure (Pseudocode)
+```
+FUNCTION featureName(input: InputType) -> OutputType:
+  // Step 1: Validate inputs (only if tests require)
+  IF input is invalid:
+    THROW appropriate error
+
+  // Step 2: Core logic (simplest approach)
+  result = processInput(input)
+
+  // Step 3: Return (match test expectations)
+  RETURN result
+END_FUNCTION
 ```
 
-### Python
-```python
-def feature_name(input_data: InputType) -> OutputType:
-    """Minimal implementation for feature."""
-    # Input validation (if tested)
-    if not input_data:
-        raise ValueError("Input required")
-    
-    # Core logic (straightforward approach)
-    result = process_input(input_data)
-    
-    # Return expected format
-    return result
+### Class-Based Pattern (Pseudocode)
+```
+CLASS Feature:
+  METHOD process(input: InputType) -> OutputType:
+    // Validate if tests expect it
+    IF input is null:
+      THROW ArgumentError("Input required")
+
+    // Straightforward logic
+    result = processInput(input)
+
+    RETURN result
+  END_METHOD
+END_CLASS
 ```
 
-### Go
-```go
-func FeatureName(input InputType) (OutputType, error) {
-    // Validation (as per tests)
-    if input == nil {
-        return nil, errors.New("input required")
-    }
-    
-    // Simple implementation
-    result := processInput(input)
-    
-    return result, nil
-}
-```
+### Implementation Principles
+Regardless of language, implementations should follow these patterns:
+- **Minimal Code**: Write only what's needed to pass tests
+- **Clear Intent**: Code should clearly express its purpose
+- **Test-Driven**: Implementation matches test expectations exactly
+- **No Premature Optimization**: Keep it simple in green phase
+- **Error Handling**: Only handle errors that tests verify
 
-### Java
-```java
-public class Feature {
-    public OutputType process(InputType input) {
-        // Validate if tests expect it
-        if (input == null) {
-            throw new IllegalArgumentException("Input required");
-        }
-        
-        // Straightforward logic
-        OutputType result = processInput(input);
-        
-        return result;
-    }
-}
-```
-
-### C#
-```csharp
-public class Feature
-{
-    public OutputType Process(InputType input)
-    {
-        // Validation per test requirements
-        if (input == null)
-            throw new ArgumentNullException(nameof(input));
-        
-        // Direct implementation
-        var result = ProcessInput(input);
-        
-        return result;
-    }
-}
-```
+The framework will adapt these patterns to your specific language's syntax and conventions during development.
 
 ## Common Implementation Patterns
 
 ### Data Validation
 Only validate what tests explicitly check:
-```javascript
-function validate(data) {
+```
+FUNCTION validate(data):
   // Only validations that have failing tests
-  if (!data.requiredField) {
-    throw new Error('requiredField is required');
-  }
+  IF data.requiredField is missing:
+    THROW Error("requiredField is required")
+  END_IF
   // Don't add extra validations yet
-}
+END_FUNCTION
 ```
 
 ### Error Handling
 Match test expectations exactly:
-```python
-try:
-    result = risky_operation()
-except SpecificError as e:
-    # Only handle errors that tests expect
-    return {"error": str(e)}
-# Don't add generic error handling yet
+```
+TRY:
+  result = risky_operation()
+CATCH SpecificError as error:
+  // Only handle errors that tests expect
+  RETURN {error: error.message}
+END_TRY
+// Don't add generic error handling yet
 ```
 
 ### State Management
 Keep state simple:
-```typescript
-class Service {
-  private state: State = initialState;
-  
-  updateState(change: Change): void {
+```
+CLASS Service:
+  PRIVATE state = initialState
+
+  METHOD updateState(change):
     // Simplest state update that passes tests
-    this.state = { ...this.state, ...change };
-  }
-}
+    state = merge(state, change)
+  END_METHOD
+END_CLASS
 ```
 
 ## Adding Missing Tests
@@ -195,12 +158,12 @@ Add tests when you discover:
 4. Follow QA agent's patterns
 
 Example:
-```javascript
+```
 // Additional test discovered during implementation
-it('should handle concurrent updates safely', () => {
+TEST: "should handle concurrent updates safely"
   // This wasn't in AC but is critical for correctness
   // ...test implementation...
-});
+END_TEST
 ```
 
 ## Code Quality Standards
@@ -214,7 +177,7 @@ it('should handle concurrent updates safely', () => {
 
 ### Documentation
 Add minimal documentation:
-```javascript
+```
 /**
  * Implements Story: <Linear ID>
  * Satisfies AC: <list of AC numbers>
@@ -302,27 +265,29 @@ Your implementation is complete when:
 
 ## Example Implementation Flow
 
-```javascript
+```
 // 1. Start with failing test
-// test: should calculate total with tax
+// TEST: "should calculate total with tax"
 
 // 2. Minimal implementation
-function calculateTotal(items, taxRate) {
-  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  return subtotal * (1 + taxRate);
-}
+FUNCTION calculateTotal(items, taxRate):
+  subtotal = SUM(item.price for each item in items)
+  RETURN subtotal * (1 + taxRate)
+END_FUNCTION
 
 // 3. Test passes ✓
 
 // 4. Next failing test
-// test: should handle empty items array
+// TEST: "should handle empty items array"
 
 // 5. Add handling
-function calculateTotal(items, taxRate) {
-  if (!items || items.length === 0) return 0;
-  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  return subtotal * (1 + taxRate);
-}
+FUNCTION calculateTotal(items, taxRate):
+  IF items is empty or null:
+    RETURN 0
+  END_IF
+  subtotal = SUM(item.price for each item in items)
+  RETURN subtotal * (1 + taxRate)
+END_FUNCTION
 
 // 6. Test passes ✓
 
@@ -377,7 +342,7 @@ Post a comment on the Linear issue when:
 [DEVELOPER] Technical Debt Identified:
 - Type: Code Quality
 - Summary: Validation logic duplicated in 3 places
-- Details: Same email validation in auth.js, profile.js, settings.js
+- Details: Same email validation in auth module, profile module, settings module
 - Impact: Architect should consolidate during refactor phase
 ```
 

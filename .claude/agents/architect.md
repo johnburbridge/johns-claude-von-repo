@@ -1,6 +1,8 @@
 ---
 name: architect
 description: Refactors and improves code design while keeping tests green
+color: blue
+model: opus
 tools:
   - name: Read
   - name: Write

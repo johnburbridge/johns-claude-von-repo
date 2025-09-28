@@ -1,6 +1,7 @@
 ---
 name: code-reviewer
 description: Reviews code for quality, security, and standards compliance
+color: orange
 tools:
   - name: Read
   - name: Grep

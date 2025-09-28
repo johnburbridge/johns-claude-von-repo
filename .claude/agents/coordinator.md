@@ -1,6 +1,7 @@
 ---
 name: coordinator
 description: Orchestrates TDD workflow phases and delegates to specialized agents
+color: teal
 tools:
   - name: Task
   - name: Grep

@@ -1,6 +1,8 @@
 # AI-Assisted Test-Driven Development Starter
 
-A comprehensive starter repository for implementing AI-assisted Test-Driven Development with Claude Code. Fork this to bootstrap any project with a proven TDD workflow that leverages specialized AI agents for each development phase.
+A comprehensive, **language-agnostic** starter repository for implementing AI-assisted Test-Driven Development with Claude Code. Fork this to bootstrap any project with a proven TDD workflow that leverages specialized AI agents for each development phase.
+
+This framework adapts to **any programming language or technology stack** - from JavaScript to Rust, from Python to Go. The AI agents understand your project's specific language and apply TDD principles appropriately.
 
 ## 🎯 What This Provides
 
@@ -155,16 +157,21 @@ Epic (Multi-sprint feature)
 
 ## 🛠 Technology Adaptation
 
-The initialization process adapts to your technology:
+**This framework is truly language-agnostic.** The initialization process automatically detects and adapts to your technology stack, generating appropriate configurations and applying language-specific best practices while maintaining consistent TDD principles.
 
 ### Detected Languages
+The framework can automatically detect and adapt to:
 - **JavaScript/TypeScript**: package.json, tsconfig.json
 - **Python**: requirements.txt, setup.py, Pipfile
 - **Go**: go.mod, go.sum
 - **Java**: pom.xml, build.gradle
 - **Rust**: Cargo.toml
 - **C#**: *.csproj, *.sln
-- And more...
+- **Ruby**: Gemfile
+- **PHP**: composer.json
+- **And many more...**
+
+**No language preference** - the framework provides the same powerful TDD workflow regardless of your technology choice.
 
 ### Generated Configuration
 Based on detection, CLAUDE.md will include:

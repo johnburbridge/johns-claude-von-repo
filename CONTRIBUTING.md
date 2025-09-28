@@ -174,68 +174,57 @@ All work should be tracked in Linear:
 - **SOLID Principles**: Single responsibility, Open-closed, etc.
 - **DRY**: Don't Repeat Yourself (but don't over-abstract)
 
-### Language-Specific Standards
+### Coding Standards (Language-Agnostic)
 
-#### [JavaScript/TypeScript]
-```javascript
+#### Universal Principles
+```
 // Use meaningful variable names
-const userEmail = 'user@example.com'; // Good
-const e = 'user@example.com'; // Bad
+userEmail = "user@example.com"  // Good
+e = "user@example.com"          // Bad
 
-// Use async/await over promises
-async function fetchUser(id) {
-  const user = await api.getUser(id);
-  return user;
-}
+// Use descriptive function names
+FUNCTION calculateTotalPrice(items)  // Good
+FUNCTION calc(i)                    // Bad
 
-// Destructure when appropriate
-const { name, email } = user;
+// Document complex logic
+FUNCTION processPayment(amount, method):
+  """Process payment with specified method.
 
-// Use template literals
-const message = `Welcome, ${name}!`;
+  Parameters:
+    amount: Payment amount to process
+    method: Payment method to use
+
+  Returns:
+    Payment confirmation or error
+  """
+  // Implementation
+END_FUNCTION
 ```
 
-#### [Python]
-```python
-# Follow PEP 8
-def calculate_total(items: List[Item]) -> Decimal:
-    """Calculate the total price of items.
-    
-    Args:
-        items: List of items to calculate
-        
-    Returns:
-        Total price as Decimal
-    """
-    return sum(item.price for item in items)
+#### Code Organization Patterns
+```
+// Service/Business Logic Pattern
+CLASS UserService:
+  PRIVATE repository
 
-# Use type hints
-def process_data(data: Dict[str, Any]) -> Optional[Result]:
-    pass
+  METHOD getUser(userId):
+    IF userId is empty:
+      THROW InvalidArgumentError
+    END_IF
+    RETURN repository.findById(userId)
+  END_METHOD
+END_CLASS
 
-# Use descriptive variable names
-user_email = "user@example.com"  # Good
-e = "user@example.com"  # Bad
+// Clear separation of concerns
+MODULE feature:
+  - service layer (business logic)
+  - controller layer (request handling)
+  - model layer (data structures)
+  - test layer (verification)
+END_MODULE
 ```
 
-#### [Go]
-```go
-// Follow Go conventions
-package service
-
-// UserService handles user-related operations
-type UserService struct {
-    repo UserRepository
-}
-
-// GetUser retrieves a user by ID
-func (s *UserService) GetUser(ctx context.Context, id string) (*User, error) {
-    if id == "" {
-        return nil, ErrInvalidID
-    }
-    return s.repo.FindByID(ctx, id)
-}
-```
+**Note**: The framework adapts these patterns to your specific language's conventions and best practices during initialization.
 
 ### File Organization
 
@@ -257,25 +246,27 @@ src/
 - Log errors appropriately
 - Don't suppress errors silently
 
-#### Examples
-```javascript
-// JavaScript/TypeScript
-try {
-  const result = await riskyOperation();
-  return result;
-} catch (error) {
-  logger.error('Operation failed', { error, context });
-  throw new ApplicationError('Operation failed', error);
-}
+#### Examples (Pseudocode)
 ```
+// Error handling pattern
+TRY:
+  result = riskyOperation()
+  RETURN result
+CATCH SpecificError as error:
+  LOG_ERROR("Operation failed", error, context)
+  THROW ApplicationError("Operation failed", error)
+END_TRY
 
-```python
-# Python
-try:
-    result = risky_operation()
-except SpecificError as e:
-    logger.error(f"Operation failed: {e}")
-    raise ApplicationError("Operation failed") from e
+// Alternative pattern with multiple error types
+TRY:
+  result = performOperation()
+CATCH ValidationError:
+  HANDLE_VALIDATION_ERROR()
+CATCH NetworkError:
+  RETRY_OR_FAIL()
+CATCH GENERIC_ERROR:
+  LOG_AND_THROW()
+END_TRY
 ```
 
 ## Testing Guidelines
@@ -293,15 +284,15 @@ tests/
 ### Writing Tests
 
 #### Test Naming
-```javascript
-// Descriptive test names
-describe('UserService', () => {
-  describe('createUser', () => {
-    it('should create a user with valid data', () => {});
-    it('should throw error when email is invalid', () => {});
-    it('should prevent duplicate emails', () => {});
-  });
-});
+```
+// Descriptive test names (pseudocode)
+TEST_SUITE: "UserService"
+  TEST_GROUP: "createUser"
+    TEST: "should create a user with valid data"
+    TEST: "should throw error when email is invalid"
+    TEST: "should prevent duplicate emails"
+  END_GROUP
+END_SUITE
 ```
 
 #### Test Coverage
@@ -339,50 +330,57 @@ describe('UserService', () => {
 ### Code Documentation
 
 #### Functions/Methods
-```javascript
+```
 /**
  * Calculate the total price including tax
- * @param {number} subtotal - Price before tax
- * @param {number} taxRate - Tax rate as decimal (0.1 for 10%)
- * @returns {number} Total price including tax
- * @throws {Error} If subtotal is negative
+ *
+ * Parameters:
+ *   subtotal - Price before tax
+ *   taxRate - Tax rate as decimal (0.1 for 10%)
+ *
+ * Returns:
+ *   Total price including tax
+ *
+ * Throws:
+ *   Error if subtotal is negative
  */
-function calculateTotal(subtotal, taxRate) {
-  if (subtotal < 0) {
-    throw new Error('Subtotal cannot be negative');
-  }
-  return subtotal * (1 + taxRate);
-}
+FUNCTION calculateTotal(subtotal, taxRate):
+  IF subtotal < 0:
+    THROW Error("Subtotal cannot be negative")
+  END_IF
+  RETURN subtotal * (1 + taxRate)
+END_FUNCTION
 ```
 
 #### Classes/Modules
-```python
-"""
-User management service.
+```
+/**
+ * User management service.
+ *
+ * This module handles all user-related operations including
+ * creation, authentication, and profile management.
+ */
+CLASS UserService:
+  """Service for managing user operations."""
 
-This module handles all user-related operations including
-creation, authentication, and profile management.
-"""
+  METHOD createUser(email, password) -> User:
+    """
+    Create a new user account.
 
-class UserService:
-    """Service for managing user operations."""
-    
-    def create_user(self, email: str, password: str) -> User:
-        """
-        Create a new user account.
-        
-        Args:
-            email: User's email address
-            password: Plain text password (will be hashed)
-            
-        Returns:
-            Created user object
-            
-        Raises:
-            DuplicateEmailError: If email already exists
-            ValidationError: If email or password is invalid
-        """
-        pass
+    Parameters:
+      email: User's email address
+      password: Plain text password (will be hashed)
+
+    Returns:
+      Created user object
+
+    Throws:
+      DuplicateEmailError: If email already exists
+      ValidationError: If email or password is invalid
+    """
+    // Implementation
+  END_METHOD
+END_CLASS
 ```
 
 ### API Documentation
